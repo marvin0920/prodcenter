@@ -1,1 +1,7 @@
-This file was created by PyCharm 2.6.3 for binding GitHub repository
+
+prodcenter
+==================
+
+dependency:
+    Django 1.4.2
+    Django-ckeditor 3.6.2.1
