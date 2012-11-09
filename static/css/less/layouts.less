@@ -1,0 +1,38 @@
+//
+// Layouts
+// --------------------------------------------------
+
+
+// Container (centered, fixed-width layouts)
+.container {
+  .container-fixed();
+}
+
+// Fluid layouts (left aligned, with sidebar, min- & max-width content)
+.container-fluid {
+  padding-right: @gridGutterWidth;
+  padding-left: @gridGutterWidth;
+  .clearfix();
+}
+
+.context {
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+.placeholder-top {
+  height: @navbarHeight+10px;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+.placeholder-bottom {
+  height: @footerHeight+10px;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border: none;
+}

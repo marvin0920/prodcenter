@@ -1,0 +1,49 @@
+<div id="{{kword}}" class="modal hide fade">
+	{%ifequal kword 'new'%}
+    <div class="modal-header btn-info">
+        <a class="close" data-dismiss="modal">×</a>
+        <h3><i class="icon-plus-sign icon-white"></i>版本添加</h3>
+    </div>
+	<form id="{{kword}}" action="/info/version/new" method="post" style="margin:0">
+	{%endifequal%}
+	{%ifequal kword 'update'%}
+	<script>
+		$(function () {
+			$('form#update tbody tr').slice(0, 2).addClass("hide");
+			$('form#update thead th').slice(1, 2).html("{{ object }}");
+		})
+	</script>
+	<div class="modal-header btn-warning">
+        <a class="close" data-dismiss="modal">×</a>
+        <h3><i class="icon-check icon-white"></i>版本修改</h3>
+    </div>
+	<form id="{{kword}}" action="/info/version/{{object.id}}/update" method="post" style="margin:0">
+	{%endifequal%}
+        {% csrf_token %}
+        <div class="modal-body">
+            <div style="width:480px;margin:0px 20px">
+                <table class="table table-striped table-condensed">
+                    <thead>
+                        <th>版本名称</th>
+                        <th>
+                            <span id="prodname"></span><span id="vername"></span>
+                        </th>
+                    </thead>
+                    <tbody>
+                        {{ infoform.as_table }}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="modal-footer">
+        {%ifequal kword 'new'%}
+            <input class="btn btn-info" style="margin:0 30px 0 150px" type="submit" value="完成添加" />
+        {%endifequal%}
+        {%ifequal kword 'update'%}
+            <input class="btn btn-warning" style="margin:0 30px 0 150px" type="submit" value="完成修订" />
+        {%endifequal%}
+            
+			<input class="btn btn" type="reset" value="重置表单" />
+        </div>
+    </form>
+</div>

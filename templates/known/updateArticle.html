@@ -1,0 +1,37 @@
+
+{%extends 'known/space.html'%}
+
+{% block spacebody %}
+
+<form class="form-horizontal" id="updateArticleForm" action="/known/{{ article.id }}/update/" method="post">
+    {% csrf_token %}
+    <div class="control-group">
+        <label class="control-label"><strong>标题</strong></label>
+        <div class="controls">
+            {{ articleUpdateForm.title }}
+            {{ articleUpdateForm.folder }}
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label"><strong>内容</strong></label>
+        <div class="controls">
+            {{ articleUpdateForm.content }}
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label"><strong>状态</strong></label>
+        <div class="controls">
+            {% for radio in articleUpdateForm.status %}
+                {{ radio }}
+            {% endfor %}
+        </div>
+    </div>
+    <div class="control-group" style="padding-left: 300px;">
+        <div class="controls">
+            <input class="btn btn-info span3" type="submit" value="完成修改" />
+            <input class="btn btn span3" type="reset" value="取消修改" />
+        </div>
+    </div>
+</form>
+
+{% endblock %}

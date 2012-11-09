@@ -1,0 +1,59 @@
+{%extends 'base.html'%}
+
+{%block content%}
+<div class="container">
+    <div class="content">
+        
+        <!-- main title -->
+        <div class="well">
+            <h2>
+    	    {%block headline%}
+                <a class="" style="color:#000;text-decoration: none;" href="/product/version/home/">版本信息</a>
+                <small>Version Information</small>
+    	    {%endblock%}
+	        </h2>
+        </div>
+        
+        <!-- toolBar -->
+        {% include 'product/version/toolbar.html' %}
+        
+        <!-- main window -->
+        <div class="row-fluid">
+            <div id="results" class="span12">
+            {%block version_detail%}
+                <table class="table table-striped table-condensed">
+                    <thead>
+                        <th>产品名称</th>
+                        <th>版本列表</th>
+                    </thead>
+                    <tbody>
+                    {% regroup versions|dictsortreversed:"product.name" by product.name as productList %}
+                    {% for prod in productList %}
+                        <tr>
+                            <td class="span3">
+                            <i class="icon-list-alt"></i>
+                            {{ prod.grouper }}
+                            </td>
+                            <td class="span9">
+                            {% for ver in prod.list %}
+                            <a class="btn" href="{{ver.get_absolute_url}}">{{ ver|escape }}</a>{% endfor %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                <hr/>
+            {%endblock%}
+            </div>
+        </div>
+	
+	
+    </div><!--content-->
+</div><!--container-->
+
+{%endblock%}
+
+{%block script%}
+    <script src="/static/js/product/version/home.js"></script>
+    {%block subscript%}{%endblock%}
+{%endblock%}

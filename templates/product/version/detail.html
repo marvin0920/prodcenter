@@ -1,0 +1,125 @@
+{%extends 'product/version/home.html'%}
+
+{%block version_detail%}
+
+<div class="span12">
+    <!---->
+    <div id="version_name" class="page-header">
+        <h3>{{ version|escape }}
+            <small>
+            	{{ version.depend|default:""|escape }}
+            </small>
+        </h3>
+    </div>
+    <!---->
+    <div id="version_detail">
+        <!--menu-->
+        <div class="subnav">
+            <ul class="nav nav-tabs">
+                <li class="active">
+                    <a href="#basic" data-toggle="tab">基本信息</a>
+                </li>
+                <li class="">
+                    <a href="#docs" data-toggle="tab">参考文档</a>
+                </li>
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        介质获取
+                        <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li class="">
+                            <a data-toggle="tab" href="#getVersion">版本获取</a>
+                        </li>
+                        <li class="">
+                            <a data-toggle="tab" href="#getPatchs">补丁获取</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <!--body-->
+            <div class="tab-content">
+                <div class="tab-pane active fade in" id="basic">
+                    <div class="row-fluid">
+                        <div class="span2 offset1">
+                            <strong>发布日期：</strong>
+                        </div>
+                        <div class="span5">
+                            <span class="label">
+                            {{ version.created|date:"F j, Y"|default:"N/A"}}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span2 offset1">
+                            <strong>版本变更：</strong>
+                        </div>
+                        <div class="span7">
+                            {{ version.desc|escape|linebreaks }}
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="tab-pane fade" id="docs">
+                    TestReport & UserManual
+                </div>
+
+
+                <div class="tab-pane fade" id="getVersion">
+                    <div class="row-fluid">
+                        <div class="span7 offset1">
+                            <i class="icon-file"></i>
+                            文件名称 ： <b>{{f.name}}</b>
+                        </div>
+                    </div>
+
+                    <div class="row-fluid">
+                        <div class="span5 offset1">
+                            <i class="icon-barcode"></i>
+                            文件校验 ：<span class="label">{{f.md5|default:"N/A"}}</span>(MD5)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane fade" id="getPatchs">
+                    {%if not version.patch_set.all%}
+                        暂无补丁信息
+                    {% else %}
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th style="min-width:90px">补丁统一编号</th>
+                                <th style="min-width:60px">问题说明</th>
+                                <th style="min-width:60px">操作指引</th>
+                                <th style="min-width:60px">回滚方法</th>
+                                <th style="min-width:60px">备 注</th>
+                                <th style="min-width:70px"></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for patch in version.patch_set.all %}
+                                <tr>
+                                    <td>{{ patch|escape }}</td>
+                                    <td>{{patch.problem|escape|linebreaks}}</td>
+                                    <td>{{patch.method|escape|linebreaks}}</td>
+                                    <td>{{patch.rollback|escape|linebreaks}}</td>
+                                    <td>{{patch.remark|escape|linebreaks}}</td>
+                                    <td>
+                                        <a class="btn btn-small btn-inverse" href="">
+                                            <i class="icon-download icon-white"></i> 下 载
+                                        </a>
+                                    </td>
+                                </tr>
+                            {%endfor%}
+                            </tbody>
+                        </table>
+                    {%endif%}
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{%endblock%}

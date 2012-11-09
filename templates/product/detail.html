@@ -1,0 +1,52 @@
+{%extends 'product/home.html'%}
+{%block productDetail%}
+<div id="productTitle" class="page-header">
+    <h1>{{ product.name }} <span group="{{product.group.alias}}" class="hide" />
+        <small>{{ product.alias }}</small>
+    </h1>
+</div>
+
+<ul class="nav nav-pills">
+    {%block productMenu%}
+    <li class="active"><a data-toggle="pill" href="#intro">信息总览</a></li>
+    <li><a data-toggle="pill" href="#func">功能说明</a></li>
+    <li><a data-toggle="pill" href="#vers">版本信息</a></li>
+    {%endblock%}
+</ul>
+<div class="tab-content">
+    <!-- introduce tab -->
+    <div class="tab-pane fade in active" id="intro">
+        
+        <div class="page-header" style="margin: 0px">
+            <h3>产品介绍<small>Product Introduction</small></h3>
+        </div>
+        <div class="row">
+            <div class="span8 offset1">
+                {{ product.desc|escape|linebreaks }}
+            </div>
+        </div>
+        <div class="page-header" style="margin: 0px">
+            <h3>组织架构<small>construction & Architecture</small></h3>
+        </div>
+        <div class="row">
+            <div class="span8 offset1">
+            </div>
+        </div>
+    </div>
+
+    <!-- function tab -->
+    <div class="tab-pane fade" id="func">
+        {% include 'product/function/list.html' with functions=product.function_set.all %}
+    </div>
+    
+    <!-- version tab -->
+    <div class="tab-pane fade" id="vers">
+        {% include 'product/version/list.html' with versions=product.version_set.all %}
+    </div>
+
+</div>
+{%endblock%}
+
+{%block subscript%}
+    <script src="/static/js/product/detail.js"></script>
+{%endblock%}

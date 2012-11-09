@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block content %}
+{% if form.errors %}
+    <div class="alert alert-error fade in" data-alert="alert">
+    	<a class="close" data-dismiss="alert" href="#">×</a>
+        <strong>Warning!</strong> Your username and password didn't match. Please try again.
+    </div>
+{% endif %}
+<div class="container">
+    <div class="row" style="padding: 100px 0;">
+        <div class="span6">
+            <div class="row" style="padding: 80px 0 80px 0; border-right: 1px solid #ddd;">
+                <div class="span4 offset2">
+                    <img src="/static/img/logo.png" />
+                </div>
+            </div>
+        </div>
+
+        <div class="span6">
+            <form method="post" action="/accounts/login/">
+                {% csrf_token %}
+                <div class="row" style="padding-top: 80px">
+                    <div class="span5 offset1">
+                        <div class="row" style="margin-bottom: 5px;">
+                            <div class="span1" style="padding-top: 5px">
+                            	用户名
+                            </div>
+                            <div class="span4">
+                                {{ form.username }}
+                            </div>
+                        </div>
+                        <div class="row" style="margin-bottom: 5px;">
+                            <div class="span1" style="padding-top: 5px">
+                            	密&nbsp;&nbsp;&nbsp;码
+                            </div>
+                            <div class="span4">
+                                {{ form.password }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+		        <div style="text-align:center">
+			        <input class="btn btn-primary" type="submit" value="登  录" />
+			        <input type="hidden" name="next" value="{{ next }}" />
+		        </div>
+                
+            </form>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

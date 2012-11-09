@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>{%block title%}--产品信息中心--{%endblock%}</title>
+    <meta name="description" content="">
+    <meta name="author" content="Marvin Xu">
+
+    <!-- styles -->
+    <link href="/static/css/bootstrap.css" rel="stylesheet">
+    <link href="/static/css/responsive.css" rel="stylesheet">
+    {%block style%}{%endblock%}
+    <script src="/static/js/jquery-1.7.1.min.js"></script>
+    <script src="/static/js/jquery.validate.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script src="/static/js/base.js"></script>
+    <script src="/static/ckeditor/ckeditor/ckeditor.js"></script>
+    {%block script%}{%endblock%}
+    <link rel="shortcut icon" href="/static/img/favicon.ico" />
+  </head>
+
+  <body>
+  	<!-- /menu -->
+    {%block navigator%}
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+		  <a class="brand" href="/">产品信息中心</a>
+	  	  {%block menu%}
+	      	<ul id="topbar" class="nav">
+                    <li class=""><a href="/">首页</a></li>
+                    <li class=""><a href="/product/home">产品组件</a></li>
+
+                    <li class="divider-vertical"></li>
+                    <li class=""><a href="/known/home/">知识库</a></li>
+                    <!--
+                    <li class=""><a href="/project/home">项目实施</a></li>
+                    <li class=""><a href="/solution/home">解决方案</a></li>
+                    <li class=""><a href="/teamwork/home">部门协作</a></li>
+			  <li class="divider-vertical"></li>
+                    <li class=""><a href="/contact/">联系方式</a></li>
+                    -->
+			</ul>
+			<ul class="nav pull-right">
+			  <li class="dropdown" id="username">
+			  {% if user.is_authenticated %}
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#username">
+			  	  	<i class="icon-user"></i>
+			  	  	{{ user.get_full_name }}
+				</a>
+				<ul class="dropdown-menu">
+                    <li><a data-toggle="modal" href="#changepwd">Change Password</a></li>
+                    <li><a data-toggle="modal" href="#profile">User Profile</a></li>
+                    <li class="divider"></li>
+                    <li><a href="/accounts/logout/">Login out</a></li>
+                </ul>
+                
+			  {% endif %}
+			  </li>
+            </ul>
+	  	  {%endblock%}
+        </div>
+      </div>
+    </div>
+    {%endblock%}
+    
+    {% if user.is_authenticated %}
+        {% include 'base/userinfo.html' %}
+    {% endif %}
+
+
+     <!-- /container -->
+     <div class="context">
+       {%block container%}
+           <div class="placeholder-top"></div>
+           {%block content%}
+           {%endblock%}
+           <div class="placeholder-bottom"></div>
+        {%endblock%}
+     </div>
+    
+	
+	
+
+  <!-- Footer -->
+    <div class="footer">
+      <div class="container">
+        <div class="row">
+          <div class="span4">
+            &copy; Company 2012 &ndash; Copyright on&nbsp;
+            <a href="http://www.carnation.com.cn">石竹软件</a>
+          </div>
+        </div>
+            
+      </div>  
+    </div>
+    <!-- Footer end -->
+
+  </body>
+</html>

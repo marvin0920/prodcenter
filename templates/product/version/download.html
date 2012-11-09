@@ -1,0 +1,28 @@
+
+<div class="row">
+	<i class="icon-warning-sign"></i>
+	<div class="span5">
+		当您看到此信息，文件下载已启动，如未正常开始下载，请猛击
+		<a href="{{f.url}}">
+			<span class="label">这里</span>
+		</a>
+		手动下载。
+	</div>
+</div>
+<hr />
+<div class="row">
+    <i class="icon-file"></i>
+	<div class="span5">
+		文件名称 ： <b>{{f.name}}</b>
+	</div>
+</div>
+
+<div class="row">
+    <i class="icon-barcode"></i>
+	<div class="span5">
+		文件校验 ：<span class="label">{{f.md5|default:"N/A"}}</span>(MD5)
+	</div>
+</div>
+
+<iframe style="display:none;" src='{{f.url}}'>
+</iframe>

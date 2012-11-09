@@ -1,0 +1,84 @@
+
+
+<!-- toolbar -->
+<div class="toolbar">
+    <ul class="nav nav-pills">
+        <li>
+            <div>
+                <a class="btn btn-success" data-toggle="modal" href="#chose" style="margin: 0;display: inline-block;">
+	        <i class="icon-th-list icon-white"></i>
+                    版本映射表
+	    </a>
+            </div>
+        </li>
+        <li>
+            <div>
+                <input id="searchkey" class="span2 input-medium search-query"  style="border-radius:14px 0 0 14px;" type="text" placeholder="请输入版本号..." data-source='[{% for ver in versions %}"{{ ver }}"{% if not forloop.last %}, {% endif %}{% endfor %}]' data-provide="typeahead" data-items="20" />
+	        <button id="search" class="btn btn-primary" style="border-radius:0 14px 14px 0;margin-left: -5px">
+                        <i class="icon-search icon-white"></i>
+                    	Search
+	        </button>
+            </div>
+        </li>
+        <!--
+        <li>
+            <div>
+                <a class="btn btn-info" data-toggle="modal" href="#new" style="margin: 0;display: inline-block;">
+	        <i class="icon-plus icon-white"></i>
+	        添加版本
+	    </a>
+            </div>
+        </li>
+        
+        {%if version%}
+        <li>
+            <div>
+                <a class="btn btn-warning" data-toggle="modal" href="#update" style="margin: 0;display: inline-block;">
+	        <i class="icon-check icon-white"></i>
+	        修订版本
+	    </a>
+            </div>
+        </li>
+        -->
+        <!--
+        <li>
+            <div>
+                <a class='btn btn-danger' data-toggle='modal' href='#delete' style='margin: 0;display: inline-block;'>
+					<i class='icon-trash icon-white'></i>
+					删除版本
+				</a>
+            </div>
+        </li>
+        -->
+        {%endif%}
+    </ul>
+</div>
+
+
+<!-- the modal window for mapping version -->
+<div id="chose" class="modal hide fade">
+    <div class="modal-header btn-success">
+        <a class="close" data-dismiss="modal">×</a>
+        <h3>请选择需要查看的产品:</h3>
+    </div>
+    <div class="modal-body">
+        <div class="input-prepend">
+        	{% for product in products|dictsort:"id"%}
+            <div class="span5" id="check{{product.name}}">
+        	    <label  class="add-on {% ifequal product.name 'MOC' %}active disabled {% endifequal %}pull-left">
+                    <input type="checkbox" value="{{ product.id}}" name="prods"{% ifequal product.name 'MOC' %} checked="checked" disabled="true"{% endifequal %}>
+	    </label>
+	    <span class="input-xlarge uneditable-input" style="width: 420px; float:left;">
+	        <i class="icon-tag"></i>
+	        &nbsp;{{ product.name|escape }}{{ product.alias|escape }}
+	    </span>
+            </div>
+        	{% endfor %}
+        </div>
+    </div>
+    <div class="modal-footer">
+        <a id="findMap" class="btn btn-success" href="#">&nbsp;查&nbsp;&nbsp;询&nbsp;</a>
+        <a class="btn" data-dismiss="modal" href="#">&nbsp;取&nbsp;&nbsp;消&nbsp;</a>
+    </div>
+</div>
+

@@ -1,0 +1,32 @@
+
+
+<table class="table table-striped table-condensed">
+    <thead>
+    {% for prod in prods %}
+        <th>{{ prod.name|escape }}</th>
+    {% endfor %}
+    </thead>
+    <tbody>
+    {% for suite in result %}
+        <tr>
+        {% for vers in suite %}
+            <td>
+	{% comment %}MOC Version is at first column{% endcomment %}
+	    {% if forloop.first %}
+	    <a class="btn" href="{{ver.get_absolute_url}}">
+	        {{ vers|escape }}
+	    </a>
+	    {% else %}
+	    {% for ver in vers %}
+	    <a class="btn" href="{{ver.get_absolute_url}}">
+	        {{ ver|escape|default:"--" }}
+	    </a>
+	    {% if not forloop.last %}<br />{% endif %}
+	    {% endfor %}
+	{% endif %}
+	</td>
+        {% endfor %}
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

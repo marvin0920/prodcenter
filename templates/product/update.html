@@ -1,0 +1,25 @@
+
+<div id="updateProduct" class="modal hide fade">
+    <div class="modal-header btn-info">
+            <a class="close" data-dismiss="modal">×</a>
+            <h3><i class="icon-plus-sign icon-white"></i>产品修改</h3>
+    </div>
+    <form id="updateProductForm" action="/product/update/{{product.id}}" method="post" style="margin:0">
+        {% csrf_token %}
+        <div class="modal-body">
+            <div style="width:480px;margin:0px 20px">
+                <table class="table table-striped table-condensed">
+                    <thead>
+                    </thead>
+                    <tbody>
+                        {{ productUpdateForm.as_table }}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <input class="btn btn-info" style="margin:0 30px 0 150px" type="submit" value="完成添加" />
+            <input class="btn btn" type="reset" value="重置表单" />
+        </div>
+    </form>
+</div>

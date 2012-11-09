@@ -1,0 +1,84 @@
+{%extends 'base.html'%}
+{%block content%}
+
+{% regroup products|dictsort:"group.id" by group.alias as groups %}
+
+<div class="container">
+    <div class="row-fluid">
+        <div class="span3">
+            <ul id="sidebar" class="nav nav-list sidebar-nav">
+                {% for group in groups %}
+                    <li>
+                        <a  name="{{ group.grouper }}"class="title" href="#">
+                            <span>
+                                {{ group.grouper }}
+                            </span>
+                            <i class="icon-plus"></i>
+                        </a>
+                    </li>
+                    {% for prod in group.list %}
+                    <li class="">
+                        <a name="{{ group.grouper }}" href="/product/{{prod.id}}/detail/">
+                            <i class="icon-chevron-right"></i>
+                            {{ prod.alias }}
+                        </a>
+                    </li>
+                    {% endfor %}
+
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="span9">
+        {%block productDetail%}
+			
+            <!-- Main hero unit for a primary marketing message or call to action -->
+            <div class="hero-unit">
+                <h1>产品组件</h1>
+                <br/>
+                <p>查看产品间的组织架构及相互依赖关系，获取产品版本信息及下载地址。</p>
+                <p>
+                    <a class="btn btn-info pull-right" href="/product/version/home/">
+                    	产品版本信息 &raquo;
+	                </a>
+                </p>
+            </div>
+
+            <!-- row of columns -->
+	{% for group in groups %}
+	<div class="row-fluid" style="background-color: #eeeeee;border-radius:3px 3px 3px 3px;">
+	    <div class="span12">
+	        <span class="label">
+	            {{ group.grouper|escape }}
+	        </span>
+	        {% for prod in group.list %}
+	        <div class="row-fluid" style="margin:4px 0;border-radius: 10px 10px 10px 10px;background-color: #dddddd;">
+	            <div class="span2" style="text-align:center;">
+	               <b>{{ prod.alias }}</b>
+	            </div>
+	            <div class="span9">
+	                {{ prod.desc|escape|linebreaks }}
+	            </div>
+	            <div class="span1" style="margin: auto">
+	                <a class="btn btn-info btn-mini pull-right" href="/product/{{prod.id}}/detail/">
+                                详情 &raquo;
+                            </a>
+	            </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            {% endfor %}
+            <!-- end of row -->
+			
+	{%endblock%}
+        </div>
+    </div>
+</div>
+{%endblock%}
+
+{%block script%}
+    <script src="/static/js/product/home.js"></script>
+    {%block subscript%}{%endblock%}
+{%endblock%}

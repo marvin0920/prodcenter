@@ -1,0 +1,38 @@
+
+<div class="well">
+    <div class="sideBlock">
+        <label><strong>文章分类</strong></label>
+        {% for folder in folders %}
+            {% if forloop.counter0|divisibleby:2 %}
+            <div class="row-fluid" style="margin-bottom: 3px;">
+            {% endif %}
+            <div class="span6 folderList">
+                <a href="/known/folder/{{ folder.0 }}" class="btn btn-link">{{ folder.1 }}</a>
+            </div>
+            {% if forloop.counter|divisibleby:2 or forloop.last %}
+            </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+    <div class="sideBlock">
+    <label><strong>部门公告</strong></label>
+    {% for topNotice in topNotices %}
+        <p style="font-size: 12px">
+            <a href="/known/{{ topNotice.id }}/detail/">{{ topNotice.title }}</a>
+            <span class="pull-right">{{ topNotice.created|date:"Y-m-d" }}</span>
+        </p>
+    {% endfor %}
+    </div>
+
+    <div class="sideBlock">
+    <label><strong>热门文章</strong></label>
+    {% for topArticle in topArticles %}
+        <p style="font-size: 12px">
+            <a href="/known/{{ topArticle.id }}/detail/">{{ topArticle.title }}</a>
+            <span class="pull-right">{{ topArticle.count }}</span>
+        </p>
+    {% endfor %}
+    </div>
+
+</div>

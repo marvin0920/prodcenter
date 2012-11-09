@@ -1,0 +1,88 @@
+{%extends 'base.html'%}
+
+{%block title%}知识库-KnowledgeBase{%endblock%}
+
+{%block style%}
+    <style type="text/css">
+    .folderList {background-color: #EEEEEE;
+            border-radius: 3px 3px 3px 3px;
+            line-height: 40px;
+            min-height: 40px;
+            text-align: center;}
+    .sideBlock {padding-bottom:5px;
+            margin-bottom: 10px;
+            border-bottom: 2px solid #999;}
+    </style>
+
+    {%block substyle%}{%endblock%}
+{%endblock%}
+
+{%block content%}
+<div class="container">
+    <!-- main title -->
+    <div class="well">
+        <h2>
+            {%block headline%}
+                <a class="" style="color:#000;text-decoration: none;" href="/known/home/">知识库</a>
+                <small>Knowledge Base</small>
+            {%endblock%}
+            <a class="btn btn-success pull-right" href="/known/space/">我的知识库</a>
+        </h2>
+
+    </div>
+    {% block mainbody %}
+    <div class="row-fluid">
+        <div class="span9">
+            <div>
+                <table class="table table-striped">
+                    <thead>
+                    </thead>
+                    <tbody>
+                        {% for article in objects.object_list %}
+                        <tr>
+                            <td>
+                                <div>
+                                    <h4 style="margin-bottom: 0px;">
+                                        <a href="/known/{{ article.id }}/detail/" style="text-decoration: none;color: #000;">
+                                            {{ article.title }}
+                                        </a>
+                                        <small>
+                                            <a href="/known/folder/{{ article.folder }}" class="btn btn-link">
+                                                {{ article.getFolder }}
+                                            </a>
+                                            <label>
+                                                <span class="label">{{ article.created|date:"Y年m月d日 H时i分"|default:"" }}</span>
+                                                <span class="label label-info">{{ article.author.get_full_name|default:"无名高手" }}</span>
+                                                <span>查看次数: <span class="badge badge-important">{{ article.count }}</span></span>
+                                            </label>
+                                        </small>
+                                    </h4>
+                                </div>
+
+                                <div style="height:60px; overflow: hidden;">
+                                    {{ article.content|striptags|cut:"&nbsp;" }}
+                                </div>
+                            </td>
+
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div>
+                {% include 'base/pagination.html' %}
+            </div>
+        </div>
+        <div class="span3">
+            {% include 'known/sidebar.html' %}
+        </div>
+    </div>
+    {% endblock %}
+
+</div>
+{%endblock%}
+
+{%block script%}
+    <script src="/static/js/home.js"></script>
+    {%block subscript%}{%endblock%}
+{%endblock%}

@@ -1,0 +1,19 @@
+
+<ul id="sidebar" class="nav nav-list sidebar-nav">
+    <li class="">
+        <a href="#" class="title" style="padding-left: 20px;">
+            <label><h4>{{ user.get_full_name }}</h4></label>
+            <label>系统帐号 : {{ user.username }}</label>
+        </a>
+    </li>
+    <li class="{% ifequal where 'space' %}active{% endifequal %}">
+        <a href="/known/space/" class="">
+            我的文章
+        </a>
+    </li>
+    <li class="{% ifequal where 'create' %}active{% endifequal %}">
+        <a href="/known/article/create/" class="">
+            新建文章
+        </a>
+    </li>
+</ul>

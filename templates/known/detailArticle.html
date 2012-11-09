@@ -1,0 +1,36 @@
+{%extends 'known/home.html'%}
+
+{% block mainbody %}
+
+    <div class="row-fluid">
+        <div class="span9">
+            <div class="page-header" style="margin-bottom: 10px;">
+                <h3 style="margin-bottom: 0;">
+                    <a href="/known/{{ article.id }}/detail/" style="text-decoration: none;color: #000;">
+                        {{ article.title }}
+                    </a>
+                    <small>
+                        <a href="/known/folder/{{ article.folder }}" class="btn btn-link">
+                            {{ article.getFolder }}
+                        </a>
+                        <label>
+                            <span class="label">{{ article.created|date:"Y年m月d日 H时i分"|default:"" }}</span>
+                            <span class="label label-info">{{ article.get_full_name|default:"无名高手" }}</span>
+                            <span>查看次数: <span class="badge badge-important">{{ article.count }}</span></span>
+                        </label>
+                    </small>
+                </h3>
+            </div>
+
+            <div>
+                {% autoescape off %}
+                {{ article.content }}
+                {% endautoescape %}
+            </div>
+        </div>
+        <div class="span3">
+            {% include 'known/sidebar.html' %}
+        </div>
+    </div>
+
+{% endblock %}

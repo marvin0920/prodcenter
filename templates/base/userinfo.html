@@ -1,0 +1,84 @@
+
+<!-- the modal window below for changing users' information -->
+<script>
+$(function () {
+    {% if form.old_password.errors or form.new_password1.errors or form.new_password2.errors%}
+        $('#changepwd').modal('show');
+    {% endif %}
+    
+})
+
+</script>
+<style type="text/css">
+    #changepwd form label { margin: 5px 40px; width: 80px;}
+    #changepwd form li { margin: 5px 40px;}
+    #changepwd form input[type="password"] { margin: 5px 40px;}
+    .span5.board { background-color: #eeeeee; }
+    .useritem { padding: 5px 20px; }
+    .useritem .span1 { font-weight: 100px; }
+</style>
+
+<div id="profile" class="modal hide fade">
+    <div class="modal-header btn-info">
+        <a class="close" data-dismiss="modal">×</a>
+        <h3>用户信息</h3>
+    </div>
+    <div class="modal-body">
+        <div class="row" style="padding-left: 20px">
+            <div class="span5 board">
+                <div class="row useritem">
+                    <div class="span1">用户名 : </div>
+                    <div>{{ user.username }}&nbsp;( {{ user.get_full_name }} )</div>
+                </div> 
+            </div>
+            <div class="span5 board">
+                <div class="row useritem">
+                    <div class="span1">邮&nbsp;&nbsp;箱 : </div>
+                    <div>{{ user.email }}</div>
+                </div>
+            </div>
+        </div>
+	</div>
+	<div class="modal-footer">
+		<a class="btn btn-info" data-dismiss="modal" href="#">&nbsp;确&nbsp;&nbsp;定&nbsp;</a>
+	</div>
+</div>
+
+<div id="changepwd" class="modal hide fade">
+    <div class="modal-header btn-warning">
+        <a class="close" data-dismiss="modal">×</a>
+        <h3>用户密码修改</h3>
+    </div>
+    {% if form.errors %}
+        <div class="alert alert-error fade in" data-alert="alert">
+        	<a class="close" data-dismiss="alert" href="#">×</a>
+            <strong>错误：</strong>您输入的旧密码或密码中存在错误！请重新输入。
+        </div>
+    {% endif %}
+    <form method="post" action="/accounts/change_pwd/">
+        {% csrf_token %}
+        <div class="modal-body">
+            <div class="row" style="padding-left: 20px">
+                <div class="span5 board">
+                    <label for="id_old_password">旧密码:</label>
+                    <input id="id_old_password" type="password" name="old_password">
+                </div>
+                <div class="span5 board">
+                    <label for="id_new_password1">新密码:</label>
+                    <input id="id_new_password1" type="password" name="new_password1">
+                </div>
+                <div class="span5 board">
+                    <label for="id_new_password2">密码确认:</label>
+                    <input id="id_new_password2" type="password" name="new_password2">
+                </div>
+            </div>
+	    </div>
+        <div class="modal-footer">
+            <input class="btn btn-warning" type="submit" value="确  定" />
+		    <a class="btn" data-dismiss="modal" href="#">&nbsp;取&nbsp;&nbsp;消&nbsp;</a>
+	    </div>
+    </form>
+
+</div>
+
+

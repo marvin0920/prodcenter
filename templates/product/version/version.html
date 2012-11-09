@@ -1,0 +1,119 @@
+
+<div class="page-header">
+    <h2>版本列表
+        <small>Version List</small>
+    </h2>
+</div>
+<div class="row">
+    <div class="span12">
+        <table class="table table-condensed">
+            <thead>
+                <th>版本号</th>
+                <th>最低依赖版本</th>
+                <th>MD5校验码</th>
+                <th>下载地址</th>
+            </thead>
+            <tbody>
+                {% for ver in versions %}
+                <tr>
+                    <td>
+                    	<a class="btn" href="#{{ ver|escape }}">
+                    	{{ ver|escape }}
+						</a>
+					</td>
+                    <td>
+                    	{% if ver.depend_on%}
+                    		{{ ver.depend_on|escape|default:"N/A" }}
+						{% else %}
+							N/A
+						{% endif %}
+					</td>
+                    <td>
+                    	<span class="label">
+                    		{{ ver.md5|default:"N/A" }}
+						</span>
+					</td>
+                    <td>
+                    	{% if ver.md5 %}
+						<a class="btn" href="/file/{{ product.name }}/{{ ver|escape }}">
+							Download
+						</a>
+						{% else %}
+						<span class="label important">No File</span>
+						{% endif %}
+					</td>
+                </tr>
+                {% endfor %}
+				
+            </tbody>
+        </table>
+    </div>
+	
+</div>
+<hr/>
+
+<div class="page-header">
+    <h2>版本详情
+        <small>
+            Version Detail
+        </small>
+    </h2>
+</div>
+
+{% for ver in versions %}
+<div id="{{ ver|escape }}">
+	<br /><br />
+	<div class="page-header">
+    	<h2>{{ ver|escape }}
+        	<small>
+        	{% if ver.depend_on%}
+        		{{ ver.depend_on|escape }}
+			{% else %}
+				N/A
+			{% endif %}
+				<span class="label pull-right" style="margin:20px 20px 0px 0px">
+					<a href="#" style="color:#ffffff">Top</a>
+				</span>
+			</small>
+    	</h2>
+		
+	</div>
+	<div class="row">
+		<div class="span11 well" style="margin-left:30px">
+			<p><strong>发布日期：</strong>
+				<span class="label">{{ ver.created|date:"F j, Y"}}</span>
+			</p>
+			{{ ver.description|escape|linebreaks }}
+			
+			<p><strong>补丁列表：</strong>
+			<div style="padding:0px 150px 0px 20px">
+			{% for ebf in patchs %}
+				{% if ver in ebf.on_version.all %}
+				<a class="btn small"
+				 data-content="<span class='label warning'>问题说明</span>：{{ebf.problem|escape|linebreaks}}<span class='label warning'>操作指引</span>：{{ebf.method|escape|linebreaks}}<span class='label warning'>回滚方法</span>：{{ebf.rollback|escape|linebreaks}}<span class='label warning'>备注</span>：{{ebf.remark|escape|linebreaks}}"
+				 data-original-title=""
+				 rel="popover"
+				 href="{{ product.name }}/{{ ebf|escape }}">
+					{{ ebf|escape }}
+				</a>
+				{% endif %}
+			{% endfor %}
+			</div>
+			</p>
+		</div>
+	</div>
+</div>
+{% endfor %}
+
+<script>
+$(function () {
+	$("a[rel=popover]")
+	.popover({
+		offset: 10,
+		html: true
+	})
+	.click(function(e) {
+		e.preventDefault()
+	})
+}) 
+</script>
