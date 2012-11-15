@@ -1,5 +1,9 @@
 # -*- coding: utf-8 -*-
 __author__ = 'marvin'
+import sys
+reload(sys)
+sys.setdefaultencoding('utf8')
+
 
 from django.shortcuts import render_to_response, get_object_or_404, redirect
 from django.template import RequestContext
@@ -16,34 +20,39 @@ ARTICLE_FORM = ArticleForm
 def home(request, pageNum=1, articles=None, page='', param=None):
 
     params = {}
-    curPage = KNOWN_ROOT+"home.html"
 
-    if not articles:
+    if not(articles or page):
         try:
             articles = Article.objects.all()
         except KeyError:
             raise Http404
 
+
+    articles = articles.filter(status__exact=1)
+
     params['folders'] = STATIC['FOLDER']
     params['topArticles'] = articles.exclude(folder__iexact='notice').order_by('-count')[:10]
     params['topNotices'] = articles.filter(folder__iexact='notice').order_by('-created')[:10]
 
-    articles = articles.filter(status__exact=1).exclude(folder__iexact='notice')
+    articles.exclude(folder__iexact='notice')
 
+    curPage = KNOWN_ROOT+"home.html"
     if page: curPage = page
     if param: params.update(param)
     return listing(request, curPage, params,allObjects=articles, pageNum=pageNum)
 
 @login_required
-def space(request, pageNum=1, page='', param=None):
+def space(request, pageNum=1, articles=None, page='', param=None):
     params = {}
-    curPage = KNOWN_ROOT+"space.html"
-    try:
-        articles = Article.objects.filter(author__id__exact=request.user.id)
-        params["where"] = "space"
-    except KeyError:
-        raise Http404
+    if not(articles or page):
+        try:
+            articles = Article.objects.all()
+        except KeyError:
+            raise Http404
 
+    articles = articles.filter(author=request.user)
+    params["where"] = "space"
+    curPage = KNOWN_ROOT+"space.html"
     if page: curPage = page
     if param: params.update(param)
     return listing(request, curPage, params,allObjects=articles, pageNum=pageNum)
@@ -62,6 +71,7 @@ def createArticle(request, page='', param=None):
         try:
             articleForm = ARTICLE_FORM(request.POST)
             newArticle = articleForm.save(commit=False)
+
             newArticle.author = request.user
             newArticle.count = 0
             newArticle.save()
@@ -73,7 +83,7 @@ def createArticle(request, page='', param=None):
                 "content": "操作错误：信息新建失败！",
                 "add_on": "详细信息：%s" %e
             })
-            return createArticle(request, param=params)
+            return redirect("/known/article/create/")
     return redirect("/known/space/")
 
 def detailArticle(request, id, page='', param=None):
@@ -113,30 +123,42 @@ def updateArticle(request, id, page='', param=None):
             params['notice'] = Message(ERROR['duplicate'])
             return updateArticle(request, id, param=params)
 
-    return redirect("/known/%s/detail/" %id)
+    return redirect("/known/article/%s/detail/" %id)
 
+@login_required
+def deleteArticle(request, id, page='', param=None):
+
+    params = {}
+    try:
+        article = get_object_or_404(Article, pk=id)
+        article.delete()
+    except KeyError:
+        raise Http404
+    return redirect("/known/space/")
 
 
 def listByFolder(request, folder, pageNum=1, page='', param=None):
     params = {}
     curPage = KNOWN_ROOT+"home.html"
     try:
-        articles = Article.objects.filter(folder__iexact=folder)
+        articles = Article.objects.exclude(status__iexact=0).filter(folder__iexact=folder)
     except KeyError:
         raise Http404
 
     if page: curPage = page
     if param: params.update(param)
     return home(request, articles=articles, pageNum=pageNum, page=curPage, param=params)
+
+
 
 def listByStatus(request, status, pageNum=1, page='', param=None):
     params = {}
-    curPage = KNOWN_ROOT+"home.html"
+    curPage = KNOWN_ROOT+"space.html"
     try:
-        articles = Article.objects.filter(folder__exact=status)
+        articles = Article.objects.filter(status__exact=status)
     except KeyError:
         raise Http404
 
     if page: curPage = page
     if param: params.update(param)
-    return home(request, articles=articles, pageNum=pageNum, page=curPage, param=params)
+    return space(request, articles=articles, pageNum=pageNum, page=curPage, param=params)

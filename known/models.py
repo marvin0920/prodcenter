@@ -52,7 +52,6 @@ class ArticleForm(forms.ModelForm):
         super(ArticleForm, self).__init__(*args, **kwargs) # Call to ModelForm constructor
         self.fields['title'].widget.attrs['class'] = "span10"
         self.fields['folder'].widget.attrs['class'] = "span2"
-        self.fields['content'].widget.attrs['class'] = "span12"
         self.fields['status'].widget.attrs['class'] = "span6"
 
 

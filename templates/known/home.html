@@ -43,11 +43,11 @@
                             <td>
                                 <div>
                                     <h4 style="margin-bottom: 0px;">
-                                        <a href="/known/{{ article.id }}/detail/" style="text-decoration: none;color: #000;">
+                                        <a href="/known/article/{{ article.id }}/detail/" style="text-decoration: none;color: #000;">
                                             {{ article.title }}
                                         </a>
                                         <small>
-                                            <a href="/known/folder/{{ article.folder }}" class="btn btn-link">
+                                            <a href="/known/article/folder/{{ article.folder }}" class="btn btn-link">
                                                 {{ article.getFolder }}
                                             </a>
                                             <label>
@@ -84,5 +84,4 @@
 
 {%block script%}
     <script src="/static/js/home.js"></script>
-    {%block subscript%}{%endblock%}
 {%endblock%}

@@ -6,11 +6,9 @@
         <div class="span9">
             <div class="page-header" style="margin-bottom: 10px;">
                 <h3 style="margin-bottom: 0;">
-                    <a href="/known/{{ article.id }}/detail/" style="text-decoration: none;color: #000;">
-                        {{ article.title }}
-                    </a>
+                    {{ article.title }}
                     <small>
-                        <a href="/known/folder/{{ article.folder }}" class="btn btn-link">
+                        <a href="/known/article/folder/{{ article.folder }}" class="btn btn-link">
                             {{ article.getFolder }}
                         </a>
                         <label>

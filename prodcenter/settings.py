@@ -2,7 +2,7 @@
 # Django settings for prodcenter project.
 import os
 
-DEBUG = True
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
 ROOT_PATH = os.path.dirname(os.path.dirname(__file__))
@@ -187,8 +187,8 @@ CKEDITOR_CONFIGS = {
             ['TextColor','BGColor'],
             ['Maximize','ShowBlocks','-','About']
         ],
-        'width': 680,
-        'height': 200,
+        'width': 850,
+        'height': 500,
         'skin': 'kama',
         'language': 'zh-cn',
         'uiColor': '#DDDDDD',

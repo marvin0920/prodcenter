@@ -1,37 +1,56 @@
 
-{%extends 'known/space.html'%}
+{%extends 'known/home.html'%}
 
-{% block spacebody %}
+{%block headline%}
+    <a class="" style="color:#000;text-decoration: none;" href="/known/home/">知识库</a>
+    <small>创建文章 Create Article</small>
+{%endblock%}
 
-<form class="form-horizontal" id="createArticleForm" action="/known/article/create/" method="post">
-    {% csrf_token %}
-    <div class="control-group">
-        <label class="control-label"><strong>标题</strong></label>
-        <div class="controls">
-            {{ articleCreateForm.title }}
-            {{ articleCreateForm.folder }}
-        </div>
+{% block mainbody %}
+
+<div class="row-fluid">
+    <div class="span12">
+
+
+        <form class="form-horizontal" id="createArticleForm" action="/known/article/create/" method="post">
+            {% csrf_token %}
+            <div class="control-group">
+                <label class="control-label"><strong>文章标题</strong></label>
+                <div class="controls">
+                    {{ articleCreateForm.title }}
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label"><strong>文章分类</strong></label>
+                <div class="controls">
+                    {{ articleCreateForm.folder }}
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label"><strong>主要内容</strong></label>
+                <div class="controls">
+                    {{ articleCreateForm.content }}
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label"><strong>文章状态</strong></label>
+                <div class="controls">
+                    {{  articleCreateForm.status.0 }}
+                    {{  articleCreateForm.status.1 }}
+                </div>
+                <script type="text/javascript">
+                    $("#createArticleForm input[type='radio']:eq(0)").attr("checked", "checked");
+                </script>
+            </div>
+            <div class="control-group" style="padding-left: 300px;">
+                <div class="controls">
+                    <input class="btn btn-info span3" type="submit" value="完成编辑" />
+                    <a href="/known/space/" class="btn" style="padding:4px 50px;" > 取消编辑 </a>
+                </div>
+            </div>
+        </form>
+
     </div>
-    <div class="control-group">
-        <label class="control-label"><strong>内容</strong></label>
-        <div class="controls">
-            {{ articleCreateForm.content }}
-        </div>
-    </div>
-    <div class="control-group">
-        <label class="control-label"><strong>状态</strong></label>
-        <div class="controls">
-            {% for radio in articleCreateForm.status %}
-                {{ radio }}
-            {% endfor %}
-        </div>
-    </div>
-    <div class="control-group" style="padding-left: 300px;">
-        <div class="controls">
-            <input class="btn btn-info span3" type="submit" value="完成编辑" />
-            <input class="btn btn span3" type="reset" value="取消编辑" />
-        </div>
-    </div>
-</form>
+</div>
 
 {% endblock %}

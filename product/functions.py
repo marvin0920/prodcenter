@@ -28,7 +28,7 @@ def create(request):
               "content": "操作错误：信息新建失败！",
               "add_on": "详细信息：%s" %e
             })
-        return detail(request, sameFuncs[1], param=params)
+        return detail(request, sameFuncs.id, param=params)
     
     
 
@@ -58,8 +58,8 @@ def update(request, id):
             funcObj = get_object_or_404(Function, pk=id)
             funcForm = FUNCTION_FORM(request.POST, instance=funcObj)
             sameFuncs = funcForm.save()
-            if not sameFuncs[0]:
-                params['notice'] = Message(ERROR['duplicate'])
+#            if not sameFuncs[0]:
+#                params['notice'] = Message(ERROR['duplicate'])
         except ValueError:
             raise Http404
         return detail(request, id, param=params)

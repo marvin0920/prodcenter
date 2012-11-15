@@ -18,17 +18,19 @@
                                 <td>
                                     <div>
                                         <h4 style="margin-bottom: 0px;">
-                                            <a href="/known/{{ article.id }}/detail/" style="text-decoration: none;color: #000;">
+                                            <a href="/known/article/{{ article.id }}/detail/" style="text-decoration: none;color: #000;">
                                                 {{ article.title }}
                                             </a>
                                             <small>
-                                                <a href="/known/folder/{{ article.folder }}" class="btn btn-link">
+                                                <a href="/known/article/folder/{{ article.folder }}" class="btn btn-link">
                                                     {{ article.getFolder }}
                                                 </a>
-                                                <a href="/known/status/{{ article.status }}" class="label label-info">
+                                                <a href="/known/article/status/{{ article.status }}" class="label label-info">
                                                     {{ article.getStatus }}
                                                 </a>
-                                                <a href="/known/{{ article.id }}/update/" class="btn btn-small btn-inverse pull-right">修改</a>
+                                                <a href="/known/article/{{ article.id }}/delete/" class="btn btn-small btn-danger pull-right">删除文章</a>
+
+                                                <a href="/known/article/{{ article.id }}/update/" class="btn btn-small btn-warning pull-right">编辑修改</a>
                                                 <label>
                                                     <span class="label">{{ article.created|date:"Y年m月d日 H时i分"|default:"" }}</span>
                                                     <span>查看次数: <span class="badge badge-important">{{ article.count }}</span></span>
